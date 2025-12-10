@@ -12,7 +12,7 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
     name: '',
     email: '',
     phone: '',
-    subject: '',
+    service: '',
     message: ''
   });
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
@@ -27,34 +27,42 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
-    
-    // Simulate API call and save to LocalStorage
-    setTimeout(() => {
-      // Get existing queries
-      const existingQueries = JSON.parse(localStorage.getItem('fc_queries') || '[]');
-      const newQuery = {
-        ...form,
-        id: Date.now(),
-        date: new Date().toLocaleString()
-      };
-      
-      localStorage.setItem('fc_queries', JSON.stringify([...existingQueries, newQuery]));
-      console.log("Query Saved:", newQuery);
-      
-      setStatus('success');
-      setForm({ name: '', email: '', phone: '', subject: '', message: '' });
-      setTimeout(() => setStatus('idle'), 5000);
-    }, 1500);
+
+    try {
+      const response = await fetch(
+        'https://fcandsonsconsulting-back.vercel.app/',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(form),
+        }
+      );
+
+      if (response.ok) {
+        setStatus('success');
+        setForm({ name: '', email: '', phone: '', subject: '', message: '' });
+      } else {
+        setStatus('idle');
+        alert("Some error occurred. Please try again.");
+      }
+    } catch (error) {
+      setStatus('idle');
+      alert("Failed to send request. Check your connection.");
+    }
+
+    setTimeout(() => setStatus('idle'), 5000);
   };
 
   return (
     <section id="contact" className="py-24 bg-slate-50 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          
+
           {/* Contact Info */}
           <div>
             <h2 className="text-brand-blue font-bold tracking-wide uppercase text-sm mb-2">Get in Touch</h2>
@@ -73,7 +81,7 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
                   <p className="text-slate-600">4th floor, Padamdeep Tower, In Front Of Central Government Office, Sanjay Palace, Agra, Uttar Pradesh 282002</p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <div className="flex-shrink-0 bg-white p-3 rounded-lg shadow-md text-brand-blue">
                   <Mail size={24} />
@@ -105,7 +113,7 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
                 </div>
                 <h4 className="text-2xl font-bold text-slate-900 mb-2">Query Received!</h4>
                 <p className="text-slate-600 mb-4">Thank you. Our team has received your query and will contact you shortly.</p>
-                <button 
+                <button
                   onClick={() => setStatus('idle')}
                   className="px-6 py-2 bg-brand-blue text-white rounded-full text-sm font-bold hover:bg-cyan-600 transition-colors"
                 >
@@ -188,9 +196,8 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
               <button
                 type="submit"
                 disabled={status === 'submitting'}
-                className={`w-full py-4 rounded-xl text-white font-bold text-lg shadow-lg flex items-center justify-center gap-2 transition-all transform hover:-translate-y-1 ${
-                  status === 'submitting' ? 'bg-slate-400 cursor-not-allowed' : 'bg-brand-blue hover:bg-cyan-500 hover:shadow-neon-blue'
-                }`}
+                className={`w-full py-4 rounded-xl text-white font-bold text-lg shadow-lg flex items-center justify-center gap-2 transition-all transform hover:-translate-y-1 ${status === 'submitting' ? 'bg-slate-400 cursor-not-allowed' : 'bg-brand-blue hover:bg-cyan-500 hover:shadow-neon-blue'
+                  }`}
               >
                 {status === 'submitting' ? 'Saving...' : <>Send Message <Send size={20} /></>}
               </button>
