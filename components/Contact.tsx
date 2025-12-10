@@ -12,7 +12,7 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
     name: '',
     email: '',
     phone: '',
-    service: '',
+    subject: '',
     message: ''
   });
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
@@ -30,10 +30,11 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
+    console.log("Submitting form:", form);
 
     try {
       const response = await fetch(
-        'https://fcandsonsconsulting-back.vercel.app/send/',
+        'https://fcandsonsconsulting-back.vercel.app/send_info',
         {
           method: 'POST',
           headers: {
