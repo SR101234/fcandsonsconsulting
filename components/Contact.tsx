@@ -33,7 +33,7 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
 
     try {
       const response = await fetch(
-        'https://fcandsonsconsulting-back.vercel.app/',
+        'https://fcandsonsconsulting-back.vercel.app/send/',
         {
           method: 'POST',
           headers: {
