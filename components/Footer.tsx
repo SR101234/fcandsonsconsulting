@@ -67,6 +67,7 @@ export const Footer: React.FC<FooterProps> = ({ onServiceSelect }) => {
         </div>
 
         <div className="border-t border-slate-800 pt-8 text-center text-slate-500 text-sm">
+          <p className="mb-1">Made with <span className="text-red-500">❤️</span> by <strong>Sharad Bansal</strong></p>
           <p>&copy; {new Date().getFullYear()} FC and Sons Consulting. All rights reserved.</p>
         </div>
       </div>
