@@ -22,7 +22,7 @@ export const generateAIResponse = async (userQuery: string): Promise<string> => 
         We specialize in:
         1. Mutual Funds
         2. Demat Services
-        3. Insurance (Health and Vehicle)
+        3. Insurance (Heatlth, Life, General)
         4. Forex
         5. Custom Duty
         6. Accounting & Taxation

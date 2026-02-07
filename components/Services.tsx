@@ -9,7 +9,9 @@ import {
   FileCheck, 
   Home, 
   Banknote, 
-  PiggyBank 
+  PiggyBank, 
+  Building,
+  CreditCard
 } from 'lucide-react';
 import { ServiceItem } from '../types';
 
@@ -24,16 +26,16 @@ export const servicesList: ServiceItem[] = [
   },
   { 
     id: 2, 
-    title: 'Demat Services', 
-    description: 'Secure and seamless electronic trading.', 
+    title: 'Demat Services (Domestic/International)', 
+    description: 'Secure and seamless electronic trading globally.', 
     iconName: 'Landmark',
-    longDescription: 'Experience seamless trading and investing with our state-of-the-art Demat services. We provide a highly secure platform for holding your shares and securities electronically, effectively eliminating the risks associated with physical certificates and paperwork.',
-    features: ['Zero Account Opening Charges', 'Lowest Brokerage Rates', 'Real-time Portfolio Analytics', 'Integrated Mobile Trading App']
+    longDescription: 'Experience seamless trading and investing in both Indian and Global markets with our state-of-the-art Demat services. We provide a highly secure platform for holding your shares and securities electronically, effectively eliminating the risks associated with physical certificates while providing access to international exchanges.',
+    features: ['Zero Account Opening Charges', 'Global Market Access', 'Real-time Portfolio Analytics', 'Integrated Mobile Trading App']
   },
   { 
     id: 3, 
     title: 'Insurance', 
-    description: 'Comprehensive Health & Vehicle coverage.', 
+    description: 'Comprehensive Health, Life & General coverage.', 
     iconName: 'Shield',
     longDescription: 'Protect what matters most with our comprehensive insurance solutions. Whether it is safeguarding your health against rising medical costs or insuring your vehicle against accidents, we provide policies with the best claim settlement ratios in the industry.',
     features: ['Cashless Hospitalization Network', '24/7 Claim Assistance', 'Comprehensive & Third-party Auto Cover', 'Critical Illness Riders']
@@ -88,16 +90,32 @@ export const servicesList: ServiceItem[] = [
   },
   { 
     id: 10, 
-    title: 'FD and Bonds', 
+    title: 'FD, Bonds and NCDs', 
     description: 'Secure fixed income investment options.', 
     iconName: 'PiggyBank',
     longDescription: 'Secure your future with risk-free investment options. We offer a wide range of Corporate Fixed Deposits and Government Bonds that provide higher interest rates than traditional savings accounts, ensuring steady and guaranteed returns.',
     features: ['High Interest Corporate FDs', 'Sovereign Gold Bonds (SGB)', 'RBI Floating Rate Bonds', 'Senior Citizen Special Schemes']
   },
+  { 
+    id: 11, 
+    title: 'Building & Hotel Management', 
+    description: 'Professional facility and hospitality management.', 
+    iconName: 'Building',
+    longDescription: 'Optimize your property operations with our comprehensive management solutions. From luxury hotels to commercial complexes, we provide end-to-end facility management, including hospitality staffing, maintenance, and administrative oversight to enhance asset value and guest satisfaction.',
+    features: ['Hospitality Staffing & Training', 'Preventive Maintenance Programs', 'Vendor & Inventory Management', 'Energy Efficiency Audits']
+  },
+  { 
+    id: 12, 
+    title: 'Loans & Funding', 
+    description: 'Customized financing for individuals and businesses.', 
+    iconName: 'CreditCard',
+    longDescription: 'Fuel your personal milestones and business expansions with our diverse lending solutions. We provide expert assistance in securing competitive interest rates for various loan types, ensuring a smooth application process from documentation to disbursement.',
+    features: ['Business & Working Capital Loans', 'Home & Personal Loan Assistance', 'Venture Capital & Seed Funding', 'Loan Against Property (LAP)']
+  }
 ];
 
 const IconMap: Record<string, React.ElementType> = {
-  TrendingUp, Landmark, Shield, RefreshCcw, Truck, Calculator, FileCheck, Home, Banknote, PiggyBank
+  TrendingUp, Landmark, Shield, RefreshCcw, Truck, Calculator, FileCheck, Home, Banknote, PiggyBank, Building, CreditCard
 };
 
 interface ServicesProps {
