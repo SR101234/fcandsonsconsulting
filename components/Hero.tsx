@@ -13,7 +13,7 @@ export const Hero: React.FC = () => {
             </span>
           </h1>
           <p className="mt-4 text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Expert financial guidance for a prosperous future. From Mutual Funds to Real Estate, FC & Sons Consulting is your trusted partner in wealth creation.
+            Expert financial guidance for a prosperous future.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a

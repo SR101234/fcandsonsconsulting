@@ -99,8 +99,9 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
                 </div>
                 <div className="ml-4">
                   <h4 className="text-lg font-bold text-slate-900">Call Us</h4>
-                  <p className="text-slate-600">+91 98970 93495<br /></p>
+                  <p className="text-slate-600">+91 63995 88252<br /></p>
                   <p className="text-slate-600">+91 86309 50344<br /></p>
+                  
                 </div>
               </div>
             </div>
