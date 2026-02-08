@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Gem } from 'lucide-react';
+import { Menu, X, Calculator } from 'lucide-react';
 // import logo from "./2634_logo.png";
 
 interface NavbarProps {
   onNavigate?: (section: string) => void;
+  onOpenCalculator?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenCalculator }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -67,6 +68,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
                 {link.name}
               </a>
             ))}
+            
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                if (onOpenCalculator) onOpenCalculator();
+              }}
+              className="text-slate-600 hover:text-brand-blue font-semibold transition-colors duration-200 flex items-center gap-1"
+            >
+              <Calculator size={18} /> Calculator
+            </button>
+
             <a
               href="#contact"
               onClick={(e) => handleLinkClick(e, '#contact')}
@@ -89,18 +101,27 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white shadow-xl absolute w-full">
+        <div className="md:hidden bg-white shadow-xl absolute w-full border-t border-slate-100">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleLinkClick(e, link.href)}
-                className="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-brand-blue hover:bg-blue-50"
+                className="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-blue hover:bg-blue-50"
               >
                 {link.name}
               </a>
             ))}
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                if (onOpenCalculator) onOpenCalculator();
+              }}
+              className="w-full text-left px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brand-blue hover:bg-blue-50 flex items-center gap-2"
+            >
+               <Calculator size={18} /> Calculator
+            </button>
           </div>
         </div>
       )}
