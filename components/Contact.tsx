@@ -89,7 +89,7 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
                 </div>
                 <div className="ml-4">
                   <h4 className="text-lg font-bold text-slate-900">Email Us</h4>
-                  <p className="text-slate-600">fcandsonsconsulting@gmail.com<br /></p>
+                  <p className="text-slate-600">customersupport@fcandsonsconsulting.com<br /></p>
                 </div>
               </div>
 
