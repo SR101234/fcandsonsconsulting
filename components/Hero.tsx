@@ -20,7 +20,7 @@ export const Hero: React.FC = () => {
               href="#contact"
               className="px-8 py-4 bg-gradient-to-r from-brand-blue to-cyan-500 text-white text-lg font-bold rounded-full shadow-neon-blue hover:shadow-neon-strong transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 group"
             >
-              Book Consultation <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              Book Free Consultation <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </a>
             <a
               href="#services"
