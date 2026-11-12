@@ -5,9 +5,10 @@ import { servicesList } from './Services';
 
 interface ContactProps {
   selectedService: string;
+  onOpenPrivacyPolicy: () => void;
 }
 
-export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
+export const Contact: React.FC<ContactProps> = ({ selectedService, onOpenPrivacyPolicy }) => {
   const [form, setForm] = useState<ContactForm>({
     name: '',
     email: '',
@@ -15,6 +16,7 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
     subject: '',
     message: ''
   });
+  const [privacyConsent, setPrivacyConsent] = useState(false);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 
   useEffect(() => {
@@ -30,7 +32,6 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
-    console.log("Submitting form:", form);
 
     try {
       const response = await fetch(
@@ -40,13 +41,14 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(form),
+          body: JSON.stringify({ ...form, privacyConsent }),
         }
       );
 
       if (response.ok) {
         setStatus('success');
         setForm({ name: '', email: '', phone: '', subject: '', message: '' });
+        setPrivacyConsent(false);
       } else {
         setStatus('idle');
         alert("Some error occurred. Please try again.");
@@ -194,6 +196,29 @@ export const Contact: React.FC<ContactProps> = ({ selectedService }) => {
                   className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-blue focus:ring-2 focus:ring-blue-100 outline-none transition-all"
                   placeholder="How can we help you?"
                 ></textarea>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <input
+                  id="privacyConsent"
+                  name="privacyConsent"
+                  type="checkbox"
+                  required
+                  checked={privacyConsent}
+                  onChange={(e) => setPrivacyConsent(e.target.checked)}
+                  className="mt-1 h-4 w-4 rounded border-slate-300 text-brand-blue focus:ring-brand-blue"
+                />
+                <label htmlFor="privacyConsent" className="text-sm text-slate-600">
+                  I have read the{' '}
+                  <button
+                    type="button"
+                    onClick={onOpenPrivacyPolicy}
+                    className="font-semibold text-brand-blue underline hover:text-cyan-600"
+                  >
+                    Privacy Policy
+                  </button>
+                  {' '}and consent to FC &amp; Sons Consulting using my information to respond to my query.
+                </label>
               </div>
 
               <button

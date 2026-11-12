@@ -4,9 +4,10 @@ import { FaWhatsapp } from "react-icons/fa";
 
 interface FooterProps {
   onServiceSelect: (service: string) => void;
+  onOpenPrivacyPolicy: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onServiceSelect }) => {
+export const Footer: React.FC<FooterProps> = ({ onServiceSelect, onOpenPrivacyPolicy }) => {
   return (
     <footer className="bg-slate-900 text-white pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -36,6 +37,11 @@ export const Footer: React.FC<FooterProps> = ({ onServiceSelect }) => {
             <ul className="space-y-3 text-slate-400 text-sm">
               <li><a href="#" className="hover:text-cyan-400 transition-colors">About Us</a></li>
               <li><a href="#contact" className="hover:text-cyan-400 transition-colors">Contact</a></li>
+              <li>
+                <button onClick={onOpenPrivacyPolicy} className="hover:text-cyan-400 transition-colors text-left">
+                  Privacy Policy
+                </button>
+              </li>
             </ul>
           </div>
 

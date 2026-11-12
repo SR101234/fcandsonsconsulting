@@ -7,12 +7,14 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ServiceDetail } from './components/ServiceDetail';
 import { Calculator } from './components/Calculator';
+import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { ServiceItem } from './types';
 
 function App() {
   const [viewingService, setViewingService] = useState<ServiceItem | null>(null);
   const [contactSubject, setContactSubject] = useState<string>('');
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
+  const [isPrivacyPolicyOpen, setIsPrivacyPolicyOpen] = useState(false);
 
   const handleLearnMore = (service: ServiceItem) => {
     setViewingService(service);
@@ -85,6 +87,10 @@ function App() {
         isOpen={isCalculatorOpen}
         onClose={() => setIsCalculatorOpen(false)}
       />
+      <PrivacyPolicy
+        isOpen={isPrivacyPolicyOpen}
+        onClose={() => setIsPrivacyPolicyOpen(false)}
+      />
 
        <a
         href="#contact"
@@ -119,10 +125,16 @@ function App() {
         )}
 
         {/* Contact section is always visible at bottom, but we scroll to it when needed */}
-        <Contact selectedService={contactSubject} />
+        <Contact
+          selectedService={contactSubject}
+          onOpenPrivacyPolicy={() => setIsPrivacyPolicyOpen(true)}
+        />
       </main>
 
-      <Footer onServiceSelect={handleFooterServiceSelect} />
+      <Footer
+        onServiceSelect={handleFooterServiceSelect}
+        onOpenPrivacyPolicy={() => setIsPrivacyPolicyOpen(true)}
+      />
 
     </div>
   );
