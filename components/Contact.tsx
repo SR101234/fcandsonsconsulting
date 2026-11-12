@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle2, Check } from 'lucide-react';
 import { ContactForm } from '../types';
 import { servicesList } from './Services';
 
@@ -31,6 +31,10 @@ export const Contact: React.FC<ContactProps> = ({ selectedService, onOpenPrivacy
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!privacyConsent) {
+      alert("Please accept the privacy policy to submit your query.");
+      return;
+    }
     setStatus('submitting');
 
     try {
@@ -199,21 +203,38 @@ export const Contact: React.FC<ContactProps> = ({ selectedService, onOpenPrivacy
               </div>
 
               <div className="flex items-start gap-3">
-                <input
-                  id="privacyConsent"
-                  name="privacyConsent"
-                  type="checkbox"
-                  required
-                  checked={privacyConsent}
-                  onChange={(e) => setPrivacyConsent(e.target.checked)}
-                  className="mt-1 h-4 w-4 rounded border-slate-300 text-brand-blue focus:ring-brand-blue"
-                />
-                <label htmlFor="privacyConsent" className="text-sm text-slate-600">
+                <div className="relative flex-shrink-0 mt-0.5 w-5 h-5">
+                  <input
+                    id="privacyConsent"
+                    name="privacyConsent"
+                    type="checkbox"
+                    required
+                    checked={privacyConsent}
+                    onChange={(e) => setPrivacyConsent(e.target.checked)}
+                    className="peer absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                  />
+                  <div
+                    className={`w-5 h-5 rounded-md border-2 transition-all flex items-center justify-center pointer-events-none peer-focus:ring-2 peer-focus:ring-brand-blue/30 ${
+                      privacyConsent
+                        ? 'bg-brand-blue border-brand-blue text-white'
+                        : 'bg-white border-slate-300 peer-hover:border-brand-blue'
+                    }`}
+                  >
+                    {privacyConsent && (
+                      <Check size={14} strokeWidth={3} className="text-white" />
+                    )}
+                  </div>
+                </div>
+
+                <label htmlFor="privacyConsent" className="text-sm text-slate-600 cursor-pointer select-none leading-5">
                   I have read the{' '}
                   <button
                     type="button"
-                    onClick={onOpenPrivacyPolicy}
-                    className="font-semibold text-brand-blue underline hover:text-cyan-600"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onOpenPrivacyPolicy();
+                    }}
+                    className="font-semibold text-brand-blue underline hover:text-cyan-600 focus:outline-none"
                   >
                     Privacy Policy
                   </button>
