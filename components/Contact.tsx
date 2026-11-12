@@ -17,6 +17,7 @@ export const Contact: React.FC<ContactProps> = ({ selectedService, onOpenPrivacy
     message: ''
   });
   const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [consentError, setConsentError] = useState(false);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 
   useEffect(() => {
@@ -32,9 +33,10 @@ export const Contact: React.FC<ContactProps> = ({ selectedService, onOpenPrivacy
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!privacyConsent) {
-      alert("Please accept the privacy policy to submit your query.");
+      setConsentError(true);
       return;
     }
+    setConsentError(false);
     setStatus('submitting');
 
     try {
@@ -53,6 +55,7 @@ export const Contact: React.FC<ContactProps> = ({ selectedService, onOpenPrivacy
         setStatus('success');
         setForm({ name: '', email: '', phone: '', subject: '', message: '' });
         setPrivacyConsent(false);
+        setConsentError(false);
       } else {
         setStatus('idle');
         alert("Some error occurred. Please try again.");
@@ -202,44 +205,59 @@ export const Contact: React.FC<ContactProps> = ({ selectedService, onOpenPrivacy
                 ></textarea>
               </div>
 
-              <div className="flex items-start gap-3">
-                <div className="relative flex-shrink-0 mt-0.5 w-5 h-5">
-                  <input
-                    id="privacyConsent"
-                    name="privacyConsent"
-                    type="checkbox"
-                    required
-                    checked={privacyConsent}
-                    onChange={(e) => setPrivacyConsent(e.target.checked)}
-                    className="peer absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                  />
-                  <div
-                    className={`w-5 h-5 rounded-md border-2 transition-all flex items-center justify-center pointer-events-none peer-focus:ring-2 peer-focus:ring-brand-blue/30 ${
-                      privacyConsent
-                        ? 'bg-brand-blue border-brand-blue text-white'
-                        : 'bg-white border-slate-300 peer-hover:border-brand-blue'
-                    }`}
-                  >
-                    {privacyConsent && (
-                      <Check size={14} strokeWidth={3} className="text-white" />
-                    )}
+              <div className="space-y-1">
+                <label
+                  htmlFor="privacyConsent"
+                  className="flex items-start gap-3 cursor-pointer select-none group"
+                >
+                  <div className="relative flex-shrink-0 mt-0.5 w-5 h-5">
+                    <input
+                      id="privacyConsent"
+                      name="privacyConsent"
+                      type="checkbox"
+                      checked={privacyConsent}
+                      onChange={(e) => {
+                        setPrivacyConsent(e.target.checked);
+                        if (e.target.checked) setConsentError(false);
+                      }}
+                      className="sr-only peer"
+                    />
+                    <div
+                      className={`w-5 h-5 rounded-md border-2 transition-all flex items-center justify-center cursor-pointer peer-focus-visible:ring-2 peer-focus-visible:ring-brand-blue/30 ${
+                        privacyConsent
+                          ? 'bg-brand-blue border-brand-blue text-white'
+                          : consentError
+                          ? 'bg-white border-red-500'
+                          : 'bg-white border-slate-300 group-hover:border-brand-blue'
+                      }`}
+                    >
+                      {privacyConsent && (
+                        <Check size={14} strokeWidth={3} className="text-white" />
+                      )}
+                    </div>
                   </div>
-                </div>
 
-                <label htmlFor="privacyConsent" className="text-sm text-slate-600 cursor-pointer select-none leading-5">
-                  I have read the{' '}
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onOpenPrivacyPolicy();
-                    }}
-                    className="font-semibold text-brand-blue underline hover:text-cyan-600 focus:outline-none"
-                  >
-                    Privacy Policy
-                  </button>
-                  {' '}and consent to FC &amp; Sons Consulting using my information to respond to my query.
+                  <span className="text-sm text-slate-600 leading-5">
+                    I have read the{' '}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onOpenPrivacyPolicy();
+                      }}
+                      className="font-semibold text-brand-blue underline hover:text-cyan-600 focus:outline-none"
+                    >
+                      Privacy Policy
+                    </button>
+                    {' '}and consent to FC &amp; Sons Consulting using my information to respond to my query.
+                  </span>
                 </label>
+                {consentError && (
+                  <p className="text-xs text-red-500 ml-8">
+                    Please check the box to confirm you accept the Privacy Policy.
+                  </p>
+                )}
               </div>
 
               <button
